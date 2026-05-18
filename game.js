@@ -152,8 +152,7 @@ const geometries = {
 const bird = createBird();
 scene.add(bird.group);
 
-const particles = new ParticlePool(520);
-scene.add(particles.mesh);
+let particles = null;
 
 setupLighting();
 createWorld();
@@ -162,7 +161,6 @@ resetGame(false);
 showPanel('Sky Finch Runner', '穿过发光风门，收集星莓，避开云柱和风暴球。难度会随飞行距离逐步提升。', false);
 
 const clock = new THREE.Clock();
-renderer.setAnimationLoop(tick);
 
 function setupLighting() {
   const hemi = new THREE.HemisphereLight(0xfaf0c8, 0x30517e, 2.15);
@@ -849,6 +847,10 @@ class ParticlePool {
     }
   }
 }
+
+particles = new ParticlePool(520);
+scene.add(particles.mesh);
+renderer.setAnimationLoop(tick);
 
 ui.startBtn.addEventListener('click', () => {
   if (state.mode === 'paused') {

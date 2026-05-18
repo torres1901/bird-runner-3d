@@ -62,24 +62,26 @@
 
   <script>
     window.__skyFinchBooted = false;
-    window.addEventListener('error', () => {
+    const showStartupMessage = (text) => {
       const panel = document.getElementById('messagePanel');
       if (!panel) return;
       panel.classList.add('is-visible');
       const copy = panel.querySelector('p:not(.eyebrow)');
       if (copy) {
-        copy.textContent = '游戏资源加载失败，请刷新页面或检查网络。';
+        copy.textContent = text;
       }
+    };
+    window.addEventListener('error', (event) => {
+      const message = String(event?.message || '');
+      if (/WebGL|WebGLRenderer|WebGL context/i.test(message)) {
+        showStartupMessage('当前浏览器没有可用的 WebGL 渲染能力，请换 Chrome / Edge / Safari，或开启硬件加速后再试。');
+        return;
+      }
+      showStartupMessage('游戏资源加载失败，请刷新页面或检查网络。');
     });
     window.setTimeout(() => {
       if (!window.__skyFinchBooted) {
-        const panel = document.getElementById('messagePanel');
-        if (!panel) return;
-        panel.classList.add('is-visible');
-        const copy = panel.querySelector('p:not(.eyebrow)');
-        if (copy && copy.textContent.includes('难度会随飞行距离逐步提升')) {
-          copy.textContent = '游戏正在加载资源，如果长时间没有反应，请刷新页面。';
-        }
+        showStartupMessage('游戏正在加载资源，如果长时间没有反应，请刷新页面。');
       }
     }, 8000);
   </script>
