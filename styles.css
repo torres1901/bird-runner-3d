@@ -169,6 +169,15 @@ button {
   transition: opacity 220ms ease, transform 220ms ease;
 }
 
+.message-panel::after {
+  content: "加载失败时请刷新页面，或检查网络是否能访问页面资源。";
+  display: block;
+  margin-top: 14px;
+  color: rgba(255, 248, 223, 0.42);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .message-panel.is-visible {
   opacity: 1;
   transform: translate(-50%, 0);

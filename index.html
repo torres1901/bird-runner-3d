@@ -8,7 +8,7 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.164.1/build/three.module.js"
+        "three": "./vendor/three.module.js"
       }
     }
   </script>
@@ -54,12 +54,35 @@
       </div>
     </section>
 
-    <section class="hud hud-bottom">
-      <div class="control-chip">点击 / 空格：振翅</div>
-      <div class="control-chip">拖动 / A D：左右闪避</div>
-    </section>
+  <section class="hud hud-bottom">
+    <div class="control-chip">点击 / 空格：振翅</div>
+    <div class="control-chip">拖动 / A D：左右闪避</div>
+  </section>
   </main>
 
+  <script>
+    window.__skyFinchBooted = false;
+    window.addEventListener('error', () => {
+      const panel = document.getElementById('messagePanel');
+      if (!panel) return;
+      panel.classList.add('is-visible');
+      const copy = panel.querySelector('p:not(.eyebrow)');
+      if (copy) {
+        copy.textContent = '游戏资源加载失败，请刷新页面或检查网络。';
+      }
+    });
+    window.setTimeout(() => {
+      if (!window.__skyFinchBooted) {
+        const panel = document.getElementById('messagePanel');
+        if (!panel) return;
+        panel.classList.add('is-visible');
+        const copy = panel.querySelector('p:not(.eyebrow)');
+        if (copy && copy.textContent.includes('难度会随飞行距离逐步提升')) {
+          copy.textContent = '游戏正在加载资源，如果长时间没有反应，请刷新页面。';
+        }
+      }
+    }, 8000);
+  </script>
   <script type="module" src="./game.js"></script>
 </body>
 </html>

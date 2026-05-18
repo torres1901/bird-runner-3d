@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+window.__skyFinchBooted = true;
+
 const canvas = document.getElementById('gameCanvas');
 const ui = {
   score: document.getElementById('scoreValue'),
