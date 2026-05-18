@@ -43,6 +43,19 @@ button {
     linear-gradient(180deg, #7a76ff 0%, #36c3e8 45%, #ffb061 100%);
 }
 
+#gameShell::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.18), transparent 18%),
+    radial-gradient(circle at 76% 24%, rgba(101, 247, 255, 0.14), transparent 18%),
+    radial-gradient(circle at 46% 72%, rgba(255, 179, 107, 0.11), transparent 22%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.65;
+}
+
 #gameCanvas {
   position: absolute;
   inset: 0;
@@ -63,7 +76,7 @@ button {
   left: clamp(14px, 3vw, 34px);
   right: clamp(14px, 3vw, 34px);
   display: grid;
-  grid-template-columns: minmax(190px, 1fr) auto auto;
+  grid-template-columns: minmax(190px, 1fr) minmax(0, 1.25fr) auto;
   align-items: center;
   gap: 14px;
 }
@@ -118,7 +131,7 @@ button {
 
 .meters {
   display: grid;
-  grid-template-columns: repeat(3, minmax(82px, 1fr));
+  grid-template-columns: repeat(4, minmax(72px, 1fr));
   gap: 8px;
   border-radius: 8px;
   padding: 8px;
@@ -140,10 +153,22 @@ button {
 .meter strong {
   display: block;
   margin-top: 2px;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1;
   color: var(--gold);
   font-variant-numeric: tabular-nums;
+  transition: color 180ms ease, text-shadow 180ms ease, transform 180ms ease;
+}
+
+.meter.is-active strong {
+  color: var(--cyan);
+  text-shadow: 0 0 18px rgba(101, 247, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.meter.is-full strong {
+  color: var(--rose);
+  text-shadow: 0 0 18px rgba(255, 107, 158, 0.4);
 }
 
 .icon-btn {
@@ -259,48 +284,123 @@ h1 {
   white-space: nowrap;
 }
 
-@media (max-width: 760px) {
+.touch-controls {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  display: none;
+  gap: 14px;
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.touch-btn {
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  background: rgba(16, 20, 38, 0.5);
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.touch-btn-left,
+.touch-btn-right {
+  background: rgba(16, 20, 38, 0.56);
+}
+
+.touch-btn-flap {
+  background: linear-gradient(135deg, var(--gold), var(--peach));
+  color: #13213b;
+}
+
+.touch-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+@media (pointer: coarse), (max-width: 760px) {
   .hud-top {
     grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand pause"
+      "meters meters";
+    align-items: start;
     gap: 10px;
   }
 
   .brand {
-    padding: 8px 10px 8px 8px;
-  }
-
-  .brand span:last-child {
-    display: none;
+    grid-area: brand;
   }
 
   .meters {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    width: 100%;
-    grid-template-columns: repeat(3, 1fr);
+    grid-area: meters;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .meter {
-    padding: 7px 8px;
-  }
-
-  .meter strong {
-    font-size: 17px;
-  }
-
-  .message-panel {
-    bottom: clamp(86px, 15vh, 130px);
+  .icon-btn {
+    grid-area: pause;
+    justify-self: end;
   }
 
   .hud-bottom {
-    width: calc(100vw - 28px);
-    justify-content: center;
-    flex-wrap: wrap;
+    display: none;
   }
 
-  .control-chip {
-    padding: 8px 10px;
+  .touch-controls {
+    display: flex;
+  }
+
+  .message-panel {
+    bottom: clamp(128px, 22vh, 188px);
+    width: min(520px, calc(100vw - 20px));
+  }
+
+  .panel-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand {
+    gap: 10px;
+    padding: 9px 12px 9px 9px;
+  }
+
+  .brand strong {
+    font-size: 14px;
+  }
+
+  .brand span:last-child {
     font-size: 11px;
+  }
+
+  .meter {
+    padding: 6px 8px;
+  }
+
+  .meter strong {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: clamp(26px, 8.5vw, 40px);
+  }
+
+  .message-panel p:not(.eyebrow) {
+    font-size: 14px;
+  }
+
+  .touch-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
   }
 }
 

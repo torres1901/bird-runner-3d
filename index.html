@@ -38,6 +38,10 @@
           <span>速度</span>
           <strong id="speedValue">1.0</strong>
         </div>
+        <div class="meter" id="surgeMeter">
+          <span>风势</span>
+          <strong id="surgeValue">0%</strong>
+        </div>
       </div>
       <button id="pauseBtn" class="icon-btn" type="button" aria-label="暂停或继续">Ⅱ</button>
     </section>
@@ -57,6 +61,12 @@
   <section class="hud hud-bottom">
     <div class="control-chip">点击 / 空格：振翅</div>
     <div class="control-chip">拖动 / A D：左右闪避</div>
+  </section>
+
+  <section class="touch-controls" aria-label="移动端操作">
+    <button id="leftBtn" class="touch-btn touch-btn-left" type="button" aria-label="向左闪避">◀</button>
+    <button id="flapBtn" class="touch-btn touch-btn-flap" type="button" aria-label="振翅上升">⤴</button>
+    <button id="rightBtn" class="touch-btn touch-btn-right" type="button" aria-label="向右闪避">▶</button>
   </section>
   </main>
 
