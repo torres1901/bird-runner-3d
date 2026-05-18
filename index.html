@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Sky Finch Runner</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.164.1/build/three.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <main id="gameShell">
+    <canvas id="gameCanvas" aria-label="Sky Finch Runner 3D game"></canvas>
+
+    <section class="hud hud-top" aria-live="polite">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <div>
+          <strong>Sky Finch Runner</strong>
+          <span>Cozy arcade flight</span>
+        </div>
+      </div>
+      <div class="meters">
+        <div class="meter">
+          <span>分数</span>
+          <strong id="scoreValue">0</strong>
+        </div>
+        <div class="meter">
+          <span>连击</span>
+          <strong id="comboValue">x1</strong>
+        </div>
+        <div class="meter">
+          <span>速度</span>
+          <strong id="speedValue">1.0</strong>
+        </div>
+      </div>
+      <button id="pauseBtn" class="icon-btn" type="button" aria-label="暂停或继续">Ⅱ</button>
+    </section>
+
+    <section id="messagePanel" class="message-panel is-visible">
+      <div class="panel-copy">
+        <p class="eyebrow">3D Endless Runner</p>
+        <h1>Sky Finch Runner</h1>
+        <p>穿过发光风门，收集星莓，避开云柱和风暴球。难度会随飞行距离逐步提升。</p>
+      </div>
+      <div class="panel-actions">
+        <button id="startBtn" class="primary-btn" type="button">开始飞行</button>
+        <button id="restartBtn" class="secondary-btn is-hidden" type="button">重新开始</button>
+      </div>
+    </section>
+
+    <section class="hud hud-bottom">
+      <div class="control-chip">点击 / 空格：振翅</div>
+      <div class="control-chip">拖动 / A D：左右闪避</div>
+    </section>
+  </main>
+
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
